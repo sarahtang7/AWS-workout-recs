@@ -16,7 +16,7 @@ const MyCustomSignUp = () => {
       'custom:Age': age,
       'custom:address': address
     });
-    navigate('/home');
+    navigate('/quiz');
   };
 
   return (
