@@ -1,0 +1,535 @@
+swagger: "2.0"
+info:
+  title: Workout Class Recommender
+  description: 'AI powered workout class recommender, built during the Cloud and Big Data course at Columbia University.'
+  version: 1.0.0
+schemes:
+  - https
+basePath: /v1
+produces:
+  - application/json
+paths:
+  /home:
+    get:
+      summary: The home page
+      description: |
+        This API returns the user's custom home page with their recommended workouts.
+      tags:
+        - home
+      operationId: getHomePage
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/HomeRequest'
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/HomeResponse'
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /search:
+    get:
+      summary: Request a search
+      description: |
+        This API takes in a query item and returns a list of workouts that match that query
+      tags:
+        - search
+      operationId: getSearch
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/SearchRequest'
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/SearchResponse'
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  /signup:
+    post:
+      summary: Sign up as a new user
+      description: |
+        This API signs up a new user for our website
+      tags:
+        - signup
+      operationId: postSignup
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/SignupRequest'
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/SignupResponse'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  
+  /login:
+    get:
+      summary: Login authentication
+      description: |
+        This API gets login results and securitykey if applicable
+      tags:
+        - login
+      operationId: getLogin
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/LoginRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/LoginResponse'
+        '401':
+          description: Not authenticated
+          schema:
+            $ref: '#/definitions/Error'
+        '403':
+          description: Access token does not have the required scome
+          schema:
+            $ref: '#/definitions/Error'
+  
+  /profile:
+    get:
+      summary: Load a users profile page
+      description: |
+        This API returns the user's custom profile page with their previous workouts.
+      tags:
+        - profile
+      operationId: getProfile
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ProfileGetRequest'
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/ProfileResponse'
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      summary: Update a users preferences
+      description: |
+        This API updates a users preferences.
+      tags:
+        - profile
+      operationId: putProfile
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ProfilePutRequest'
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/ProfileResponse'
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary: deletes a user
+      description: |
+        This API deletes a user.
+      tags:
+        - profile
+      operationId: deleteProfile
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ProfileGetRequest'
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/SignupResponse'
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+            
+
+  /workout/{workout_id}:
+    get:
+      summary: Load a workout's page
+      description: |
+        This API returns a workout classes custom page.
+      tags:
+        - workout
+      operationId: getWorkout
+      produces:
+        - application/json
+      parameters:
+        - name: workout_id
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/WorkoutClass'
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    put:
+      summary: Update a workout's page
+      description: |
+        This API updates a workout classes custom page.
+      tags:
+        - workout
+      operationId: putWorkout
+      produces:
+        - application/json
+      parameters:
+        - name: workout_id
+          in: path
+          required: true
+          type: string
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/WorkoutClass'
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/WorkoutClass'
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    post:
+      summary: Add a workout's page
+      description: |
+        This API adds a workout classes custom page.
+      tags:
+        - workout
+      operationId: postWorkout
+      produces:
+        - application/json
+      parameters:
+        - name: workout_id
+          in: path
+          required: true
+          type: string
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/WorkoutClass'
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/WorkoutClass'
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+    delete:
+      summary: Delete a workout's page
+      description: |
+        This API deletes a workout classes custom page.
+      tags:
+        - workout
+      operationId: deleteWorkout
+      produces:
+        - application/json
+      parameters:
+        - name: workout_id
+          in: path
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/WorkoutDeleteResponse'
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  
+definitions:
+  HomeRequest:
+    type: object
+    properties:
+      user_id:
+        type: string
+  
+  HomeResponse:
+    type: object
+    properties:
+      workouts:
+        type: array
+        items:
+          $ref: '#/definitions/WorkoutClass'
+  
+  SearchRequest:
+    type: object
+    properties:
+      query:
+        type: string
+      longitude:
+        type: number
+        format: float32
+      latitude:
+        type: number
+        format: float32
+  
+  SearchResponse:
+    type: object
+    properties:
+      workouts:
+        type: array
+        items:
+          $ref: '#/definitions/WorkoutClass'
+  
+  SignupRequest:
+    type: object
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+  
+  SignupResponse:
+    type: object
+    properties:
+      user_id:
+        type: string
+
+  LoginRequest:
+    type: object
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      timestamp:
+        type: string
+        format: date-time
+  
+  LoginResponse:
+    type: object
+    properties:
+      user_id:
+        type: string
+      timestamp:
+        type: string
+        format: date-time
+  
+  ProfileGetRequest:
+    type: object
+    properties:
+      user_id:
+        type: string
+        
+  ProfilePutRequest:
+    type: object
+    properties:
+      user_id:
+        type: string
+      preference:
+        $ref: '#/definitions/Preferences'
+  
+  ProfileResponse:
+    type: object
+    properties:
+      user: 
+        $ref: '#/definitions/User'
+      prev_workouts:
+        type: array
+        items:
+          $ref: '#/definitions/WorkoutClass'
+      preference:
+        $ref: '#/definitions/Preferences'
+          
+      
+  WorkoutDeleteResponse:
+    type: object
+    properties:
+      workout_id:
+        type: string
+  WorkoutClass:
+    type: object
+    properties:
+      workout_id:
+        type: string
+      favorited:
+        type: integer
+        format: int32
+      title:
+        type: string
+      category:
+        type: string
+      intensity:
+        type: string
+      description:
+        type: string
+      summary:
+        type: string
+      times:
+        type: array
+        items:
+          $ref: '#/definitions/Time'
+      img_url:
+        type: string
+      address:
+        type: string
+      city:
+        type: string
+      state:
+        type: string
+      zip_code:
+        type: integer
+        format: int32
+      longitude:
+        type: number
+        format: float32
+      latitude:
+        type: number
+        format: float32
+  
+  Time:
+    type: object
+    properties:
+      start_time:
+        type: string
+        format: date-time
+      end_time:
+        type: string
+        format: date-time
+  
+  Preferences:
+    type: object
+    properties:
+      fitness_goals:
+        type: string
+      fav_workout_type:
+        type: string
+      fitness_level:
+        type: string
+      intensity_level:
+        type: string
+      time_of_day:
+        type: string
+      max_duration:
+        type: integer
+        format: int32
+      
+  
+  User:
+    type: object
+    properties:
+      user_id:
+        type: string
+      first_name:
+        type: string
+      last_name:
+        type: string
+      email:
+        type: string
+      phone:
+        type: string
+      birthday:
+        type: string
+        format: date-time
+      weight:
+        type: number
+        format: float32
+      
+
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
