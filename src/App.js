@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, NavLink } from 'react-router-do
 import Home from './pages/Home';
 import Login from './pages/Login';
 import WorkoutPreferencesForm from './pages/WorkoutPreferencesForm';
+import UserProfileInput from './pages/UserProfileInput';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route class="navlinks" path="/" element={<Login />}></Route>
           <Route class="navlinks" path="/home" element={<Home />}></Route>
           <Route class="navlinks" path="/quiz" element={<WorkoutPreferencesForm />}></Route>
+          <Route class="navlinks" path="/createprofile" element={<UserProfileInput />}></Route>
         </Routes>
 
       </Router>

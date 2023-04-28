@@ -57,7 +57,7 @@ const WorkoutPreferencesForm = () => {
     <StyledContainer maxWidth="sm">
       <CssBaseline />
       <Typography component="h1" variant="h4">
-        The Workout Quiz
+        Workout Preferences Quiz
       </Typography>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={3}>
