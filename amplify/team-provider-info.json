@@ -13,7 +13,11 @@
     },
     "categories": {
       "auth": {
-        "authgetfitd402632a": {}
+        "authgetfitd402632a": {},
+        "getfitd402632a": {}
+      },
+      "function": {
+        "initializeUser": {}
       }
     }
   }

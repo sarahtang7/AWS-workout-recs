@@ -10,9 +10,28 @@ const MyCustomSignUp = () => {
     const checkUser = async () => {
       const user = await Auth.currentAuthenticatedUser();
       const email = user.attributes.email;
-      alert(email);
-      if (user) { // if email not in database, navigate to createprofile. else navigate to home
-        navigate('/home');
+      
+      
+      if (user) {
+        const response = await fetch('https://zkeuos9g2a.execute-api.us-east-1.amazonaws.com/v1/auth', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: email
+          })
+        });
+        
+        const data = await response.json();
+        const signUp = JSON.parse(data.body).newUser
+        console.log("sign up: " + signUp);
+        
+        if (signUp) {
+          navigate('/createprofile', { state: { email } });
+        } else {
+          navigate('/home');
+        }
       }
     };
     checkUser();

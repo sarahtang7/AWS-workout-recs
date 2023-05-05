@@ -25,7 +25,14 @@ const awsmobile = {
     },
     "aws_cognito_verification_mechanisms": [
         "EMAIL"
-    ]
+    ],
+    "aws_cloud_logic_custom": [
+        {
+          name: "initialize-user",
+          endpoint: "https://zkeuos9g2a.execute-api.us-east-1.amazonaws.com/v1",
+          region: "us-east-1"
+        }
+      ]
 };
 
 
