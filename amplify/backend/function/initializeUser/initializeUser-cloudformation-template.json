@@ -47,12 +47,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "initializeUser",
+            "initialize-user",
             {
               "Fn::Join": [
                 "",
                 [
-                  "initializeUser",
+                  "initialize-user",
                   "-",
                   {
                     "Ref": "env"

@@ -8,7 +8,7 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "initializeUser"
+          "resourceName": "initialize-user"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -44,12 +44,12 @@
     }
   },
   "function": {
-    "initializeUser": {
+    "initialize-user": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
     },
-    "initializeuser": {
+    "initialize-user": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"

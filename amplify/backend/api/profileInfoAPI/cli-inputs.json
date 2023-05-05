@@ -3,7 +3,7 @@
   "paths": {
     "/": {
       "name": "/",
-      "lambdaFunction": "initializeUser",
+      "lambdaFunction": "initialize-user",
       "permissions": {
         "setting": "open"
       }
