@@ -68,31 +68,6 @@ paths:
           schema:
             $ref: '#/definitions/Error'
 
-  /signup:
-    post:
-      summary: Sign up as a new user
-      description: |
-        This API signs up a new user for our website
-      tags:
-        - signup
-      operationId: postSignup
-      produces:
-        - application/json
-      parameters:
-        - name: body
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/SignupRequest'
-      responses:
-        '200':
-          description: Successful response
-          schema:
-            $ref: '#/definitions/SignupResponse'
-        '500':
-          description: Unexpected error
-          schema:
-            $ref: '#/definitions/Error'
   
   /login:
     get:
@@ -153,6 +128,34 @@ paths:
           description: Unexpected error
           schema:
             $ref: '#/definitions/Error'
+    post:
+      summary: Post a users preferences
+      description: |
+        This API updates a users preferences.
+      tags:
+        - profile
+      operationId: postProfile
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/ProfilePutRequest'
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/SimpleResponse'
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
     put:
       summary: Update a users preferences
       description: |
@@ -172,7 +175,7 @@ paths:
         '200':
           description: Successful response
           schema:
-            $ref: '#/definitions/ProfileResponse'
+            $ref: '#/definitions/SimpleResponse'
         '403':
           description: Unauthorized
           schema:
@@ -200,7 +203,7 @@ paths:
         '200':
           description: Successful response
           schema:
-            $ref: '#/definitions/SignupResponse'
+            $ref: '#/definitions/SimpleResponse'
         '403':
           description: Unauthorized
           schema:
@@ -262,7 +265,7 @@ paths:
         '200':
           description: Successful response
           schema:
-            $ref: '#/definitions/WorkoutClass'
+            $ref: '#/definitions/WorkoutDeleteResponse'
         '403':
           description: Unauthorized
           schema:
@@ -294,7 +297,7 @@ paths:
         '200':
           description: Successful response
           schema:
-            $ref: '#/definitions/WorkoutClass'
+            $ref: '#/definitions/WorkoutDeleteResponse'
         '403':
           description: Unauthorized
           schema:
@@ -331,11 +334,72 @@ paths:
           schema:
             $ref: '#/definitions/Error'
   
+  /workout_modify:
+    post:
+      summary: Add a workout as a favorite or done
+      description: |
+        This API adds if a user has favorited or completed a workout
+      tags:
+        - workout_modify
+      operationId: postWorkoutModify
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/WorkoutModifyRequest'
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/SimpleResponse'
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  
+  /workouts:
+    get:
+      summary: Load a users previous or favorite workouts
+      description: |
+        This API returns the user's their previous or favorites workouts.
+      tags:
+        - workouts
+      operationId: getWorkouts
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/FavRequest'
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/FavResponse'
+        '403':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/Error'
+        '500':
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+
+  
 definitions:
   HomeRequest:
     type: object
     properties:
-      user_id:
+      email:
         type: string
   
   HomeResponse:
@@ -365,24 +429,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/WorkoutClass'
-  
-  SignupRequest:
-    type: object
-    properties:
-      first_name:
-        type: string
-      last_name:
-        type: string
-      email:
-        type: string
-      password:
-        type: string
-  
-  SignupResponse:
-    type: object
-    properties:
-      user_id:
-        type: string
 
   LoginRequest:
     type: object
@@ -391,6 +437,8 @@ definitions:
         type: string
       password:
         type: string
+      new_user:
+        type: boolean
       timestamp:
         type: string
         format: date-time
@@ -398,8 +446,10 @@ definitions:
   LoginResponse:
     type: object
     properties:
-      user_id:
+      email:
         type: string
+      new_user:
+        type: boolean
       timestamp:
         type: string
         format: date-time
@@ -407,13 +457,13 @@ definitions:
   ProfileGetRequest:
     type: object
     properties:
-      user_id:
+      email:
         type: string
         
   ProfilePutRequest:
     type: object
     properties:
-      user_id:
+      email:
         type: string
       preference:
         $ref: '#/definitions/Preferences'
@@ -436,14 +486,51 @@ definitions:
     properties:
       workout_id:
         type: string
+  
+  WorkoutModifyRequest:
+    type: object
+    properties:
+      email:
+        type: string
+      workout_id:
+        type: string
+      done:
+        type: boolean
+      favorite:
+        type: boolean
+  
+  SimpleResponse:
+    type: object
+    properties:
+      response:
+        type: string
+  
+  FavRequest:
+    type: object
+    properties:
+      email:
+        type: string
+      favorite:
+        type: boolean
+      previous:
+        type: boolean
+  
+  FavResponse:
+    type: object
+    properties:
+      workouts:
+        type: array
+        items:
+          $ref: '#/definitions/WorkoutClass'
+
+  
   WorkoutClass:
     type: object
     properties:
       workout_id:
         type: string
       favorited:
-        type: integer
-        format: int32
+        type: boolean
       title:
         type: string
       category:
@@ -507,13 +594,11 @@ definitions:
   User:
     type: object
     properties:
-      user_id:
+      email:
         type: string
       first_name:
         type: string
       last_name:
-        type: string
-      email:
         type: string
       phone:
         type: string
