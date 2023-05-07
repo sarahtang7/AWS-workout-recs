@@ -178,10 +178,10 @@ const UserProfileForm = () => {
                         id: "workout-types",
                         }}
                     >
-                        <MenuItem value="yoga">Yoga</MenuItem>
+                        <MenuItem value="cardio">Cardio</MenuItem>
+                        <MenuItem value="fitness">Fitness</MenuItem>
                         <MenuItem value="pilates">Pilates</MenuItem>
-                        <MenuItem value="running">Running</MenuItem>
-                        <MenuItem value="weightlifting">Weightlifting</MenuItem>
+                        <MenuItem value="yoga">Yoga</MenuItem>
                         <MenuItem value="cycling">Cycling</MenuItem>
                         <MenuItem value="swimming">Swimming</MenuItem>
                     </Select>
@@ -228,9 +228,9 @@ const UserProfileForm = () => {
                     >
                         <FormControlLabel value="low" control={<Radio />} label="Low" />
                         <FormControlLabel
-                        value="medium"
+                        value="moderate"
                         control={<Radio />}
-                        label="Medium"
+                        label="Moderate"
                         />
                         <FormControlLabel
                         value="high"
