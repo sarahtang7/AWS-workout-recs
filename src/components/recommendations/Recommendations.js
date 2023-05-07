@@ -3,6 +3,10 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function buildWorkout(workout) {
+    const handleButtonClick = () => {
+        window.open(workout.website, '_blank', 'noreferrer');
+    };
+
     return (
         <div key={workout.title} className="workout-card">
             <h2>{workout.title}</h2>
@@ -18,7 +22,9 @@ function buildWorkout(workout) {
                 <summary>Description</summary>
                 <p>{workout.description}</p>
             </details>
-            <p>Website: <a href={workout.website} target="_blank" rel="noreferrer">{workout.website}</a></p>
+            <button className="website-button" onClick={handleButtonClick}>
+                Visit Website
+            </button>
         </div>
     );
 }
@@ -29,7 +35,7 @@ const Recommendations = () => {
     useEffect(() => {
         const fetchData = async () => {
             const response = await axios.post('https://sk73xttyuh.execute-api.us-east-1.amazonaws.com/default/getWorkoutRecommendations', {
-                "email": "mns2168@columbia.edu"
+                "email": "sarahtang07@gmail.com"
             });
             const rawData = JSON.parse(response.data.body);
             const workouts = rawData.map(item => item[0]);

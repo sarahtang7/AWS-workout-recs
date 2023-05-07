@@ -7,6 +7,10 @@
     padding: 2rem;
 }
 
+h1 {
+    color: #008080;
+}
+
 .workout-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -15,15 +19,17 @@
 }
 
 .workout-card {
-    background-color: #fff;
-    border: 1px solid #e0e0e0;
+    background-color: #f0f7f4;
+    border: 1px solid #cfd8d7;
     border-radius: 4px;
     padding: 1.5rem;
-    transition: box-shadow 0.3s;
+    transition: box-shadow 0.3s, transform 0.3s;
+    box-shadow: 0px 4px 20px rgba(0, 128, 128, 0.1);
 }
 
 .workout-card:hover {
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 8px 30px rgba(0, 128, 128, 0.2);
+    transform: scale(1.02);
 }
 
 .workout-info {
@@ -33,9 +39,14 @@
     margin-bottom: 1rem;
 }
 
+.workout-info p {
+    color: #008080;
+}
+
 .workout-details {
     border: none;
     margin-bottom: 1rem;
+    color: #008080;
 }
 
 .workout-details summary {
@@ -46,5 +57,24 @@
 
 .workout-details p {
     white-space: pre-wrap;
-    margin: 0
+    margin: 0;
+}
+
+.website-button {
+    background-color: #008080;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.website-button:hover {
+    background-color: #006666;
 }
