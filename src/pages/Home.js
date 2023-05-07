@@ -5,7 +5,7 @@ const Home = () => {
 
     return (
         <div>
-            <h1>Hello, welcome to Get Fit!</h1>
+            <h1 style={{ marginTop: '5px' }}>Welcome to the Home Page</h1>
             <Recommendations/>
         </div>
     );
