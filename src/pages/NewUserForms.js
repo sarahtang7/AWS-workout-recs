@@ -24,11 +24,11 @@ const StyledContainer = styled(Container)(({ theme }) => ({
 }));
   
 const StyledFormControl = styled(FormControl)({
-width: "100%",
+  width: "100%",
 });
 
 const StyledButton = styled(Button)(({ theme }) => ({
-marginTop: theme.spacing(2),
+  marginTop: theme.spacing(2),
 }));
 
 const UserProfileForm = () => {

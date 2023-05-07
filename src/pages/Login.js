@@ -11,7 +11,6 @@ const MyCustomSignUp = () => {
       const user = await Auth.currentAuthenticatedUser();
       const email = user.attributes.email;
       
-      
       if (user) {
         const response = await fetch('https://zkeuos9g2a.execute-api.us-east-1.amazonaws.com/v1/auth', {
           method: 'POST',
@@ -24,6 +23,7 @@ const MyCustomSignUp = () => {
         });
         
         const data = await response.json();
+        console.log(data);
         const signUp = JSON.parse(data.body).newUser
         console.log("sign up: " + signUp);
         
