@@ -1,20 +1,24 @@
-import '@aws-amplify/ui-react/styles.css';
+import './Recommendations.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 function buildWorkout(workout) {
     return (
-        <div key={workout.title}>
+        <div key={workout.title} className="workout-card">
             <h2>{workout.title}</h2>
-            <p>Intensity: {workout.intensity}</p>
-            <p>Type: {workout.type}</p>
-            <p>Location: {workout.location}</p>
-            <p>Address: {workout.addr}</p>
-            <p>Start Time: {workout.start_time}</p>
-            <p>End Time: {workout.end_time}</p>
-            <p>Description: {workout.description}</p>
-            <p>Website: <a href={workout.website}>{workout.website}</a></p>
-            <hr />
+            <div className="workout-info">
+                <p>Intensity: {workout.intensity}</p>
+                <p>Type: {workout.type}</p>
+                <p>Location: {workout.location}</p>
+                <p>Address: {workout.addr}</p>
+                <p>Start Time: {workout.start_time}</p>
+                <p>End Time: {workout.end_time}</p>
+            </div>
+            <details className="workout-details">
+                <summary>Description</summary>
+                <p>{workout.description}</p>
+            </details>
+            <p>Website: <a href={workout.website} target="_blank" rel="noreferrer">{workout.website}</a></p>
         </div>
     );
 }
@@ -37,14 +41,15 @@ const Recommendations = () => {
     }, []);
 
     return (
-        <div>
+        <div className="recommendations-container">
             <h1>Recommended Workouts for you!</h1>
-            <br />
-            {workouts.map((workout, index) => {
-                return (
-                    buildWorkout(workout)
-                );
-            })}
+            <div className="workout-grid">
+                {workouts.map((workout, index) => {
+                    return (
+                        buildWorkout(workout)
+                    );
+                })}
+            </div>
         </div>
     );
 }
