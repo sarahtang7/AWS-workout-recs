@@ -101,8 +101,8 @@ const WorkoutPreferencesForm = () => {
               >
                 <MenuItem value="yoga">Yoga</MenuItem>
                 <MenuItem value="pilates">Pilates</MenuItem>
-                <MenuItem value="running">Running</MenuItem>
-                <MenuItem value="weightlifting">Weightlifting</MenuItem>
+                <MenuItem value="fitness">Running</MenuItem>
+                <MenuItem value="cardio">Weightlifting</MenuItem>
                 <MenuItem value="cycling">Cycling</MenuItem>
                 <MenuItem value="swimming">Swimming</MenuItem>
               </Select>
