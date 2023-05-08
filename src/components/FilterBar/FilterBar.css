@@ -1,0 +1,54 @@
+.filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #008080;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .filter-bar label {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 5px;
+  }
+  
+  .filter-bar select,
+  .filter-bar input[type="text"] {
+    background-color: #ffffff;
+    color: #008080;
+    font-size: 14px;
+    padding: 5px;
+    border: none;
+    border-radius: 4px;
+    margin: 0 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    outline: none;
+    cursor: pointer;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  
+  .filter-bar select:focus,
+  .filter-bar select:hover,
+  .filter-bar input[type="text"]:focus,
+  .filter-bar input[type="text"]:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transform: scale(1.02);
+  }
+  
+  .filter-bar select option {
+    background-color: #ffffff;
+    color: #008080;
+  }
+  
+  @media (max-width: 600px) {
+    .filter-bar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+    }
+  }
+  
