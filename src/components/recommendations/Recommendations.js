@@ -108,9 +108,14 @@ const Recommendations = () => {
                             <div>{workout.description.split(' ').slice(0, 20).join(' ')}...</div>
                             <br />
 
-                            {/* <span style={{padding: '5px', backgroundColor: 'rgb(255 232 235)', margin: '5px'}}>Favorited</span> 
+                            {workout.favorited ? (
+                            <span style={{padding: '5px', backgroundColor: 'rgb(255 232 235)', margin: '5px'}}>Favorited</span>
+                            ) : null}
+
+                            {workout.completed ? (
+                            <span style={{padding: '5px', backgroundColor: '#ebffeb', margin: '5px'}}>Completed</span>
+                            ) : null}
                             
-                            <span style={{padding: '5px', backgroundColor: '#ebffeb', margin: '5px'}}>Completed</span> */}
                         </div>
 
                         <div class="right" style={{ width: '30%', }}>
