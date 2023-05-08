@@ -44,7 +44,7 @@ function App() {
 
         <form id="search-bar" onSubmit={handleSearchSubmit}>
           <input type="text" style={{ height: '30px', width: '250px', fontSize: '15px', marginRight: '5px' }} placeholder="Search" value={searchTerm} onChange={handleSearch} />
-          <button type="submit" style={{ height: '30px', fontSize: '15px', marginRight: '10px' }}>Search</button>
+          <button type="submit" style={{ height: '30px', fontSize: '15px', marginRight: '10px', display: 'flex', alignItems: 'center' }}>Search</button>
         </form>
       </div>
 

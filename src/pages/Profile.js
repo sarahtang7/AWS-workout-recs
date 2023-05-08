@@ -2,7 +2,8 @@ import '@aws-amplify/ui-react/styles.css';
 import { Auth } from 'aws-amplify';
 import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
-import './Profile.css'
+import './Profile.css';
+import { Spinner } from 'react-bootstrap';
 
 const Profile = () => {
   const [userEmail, setUserEmail] = useState('');
@@ -11,6 +12,8 @@ const Profile = () => {
   const [intensity, setIntensity] = useState('');
   const [duration, setDuration] = useState('');
   const [time_of_day, setTime] = useState('');
+
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -62,6 +65,8 @@ const Profile = () => {
           const timeString = new Date(`1970-01-01T${time}:00`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
           setTime(timeString);
 
+          setLoading(false);
+
         }
 
       } catch (error) {
@@ -78,34 +83,46 @@ const Profile = () => {
       <div className="profile-container">
         <div className="profile-card">
           <h1 className="profile-header">Your Profile</h1>
-          <div>
-            <b>Email</b>: {userEmail}
-          </div>
-          <br />
-          <div>
-            <b>Favorite workout type(s)</b>: {fav_workout_types}
-          </div>
-          <br />
-          <div>
-            <b>Fitness goal(s)</b>: {fitness_goals}
-          </div>
-          <br />
-          <div>
-            <b>Preferred intensity</b>: {intensity}
-          </div>
-          <br />
-          <div>
-            <b>Preferred workout length</b>: {duration} minutes
-          </div>
-          <br />
-          <div>
-            <b>Preferred workout time</b>: {time_of_day}
-          </div>
-          <br />
-          <br />
-          <button className="profile-button" onClick={handleSignOut}>
-            Sign Out
-          </button>
+
+          {loading ? (
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          ) : (
+            <div>
+
+              <div>
+                <b>Email</b>: {userEmail}
+              </div>
+              <br />
+              <div>
+                <b>Favorite workout type(s)</b>: {fav_workout_types}
+              </div>
+              <br />
+              <div>
+                <b>Fitness goal(s)</b>: {fitness_goals}
+              </div>
+              <br />
+              <div>
+                <b>Preferred intensity</b>: {intensity}
+              </div>
+              <br />
+              <div>
+                <b>Preferred workout length</b>: {duration} minutes
+              </div>
+              <br />
+              <div>
+                <b>Preferred workout time</b>: {time_of_day}
+              </div>
+              <br />
+              <br />
+              <button className="profile-button" onClick={handleSignOut}>
+                Sign Out
+              </button>
+
+            </div>
+          )}
+          
         </div>
       </div>
     </div>

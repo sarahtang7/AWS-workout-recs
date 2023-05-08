@@ -4,6 +4,9 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import '../components/recommendations/Recommendations.css';
+
+import { Spinner } from 'react-bootstrap';
 
 
 const pointerIcon = new L.Icon({
@@ -24,6 +27,8 @@ const Favorites = () => {
     const [favorited, setFavorited] = useState([]);
 
     const [workouts, setWorkouts] = useState([]);
+
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         async function fetchUserEmail() {
@@ -56,6 +61,7 @@ const Favorites = () => {
                 const data = await response.json();
                 const faves = JSON.parse(data.body).favoriteids;
                 setFavorited(faves);
+                setLoading(false);
             }
           } catch (error) {
                 console.log(error);
@@ -125,16 +131,20 @@ const Favorites = () => {
         window.location.href = `/workout/${curr_id}`;
     }
 
-
     return (
         <div>
 
-            <h1 style={{ marginBottom: "0px"}}>Favorites</h1>
+            <h1 style={{ marginBottom: "0px"}}>Your Favorited Workouts</h1>
 
+            {loading ? (
+            <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </Spinner>
+            ) : (
             <div id='workout-info' style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
 
                 {workouts.map((workout, index) => (
-                    <div key={index} id='curr-workout' style={{ width: '32%', display: 'inline', 
+                    <div key={index} id='curr-workout' class='workout-card' style={{ width: '32%', display: 'inline', 
                                                             padding: '5px', margin: '5px', 
                                                             border: '1px solid black', 
                                                             justifyContent: 'center', cursor: 'pointer' }}
@@ -175,6 +185,7 @@ const Favorites = () => {
                 ))}
 
             </div>
+            )}
 
         </div>
     );

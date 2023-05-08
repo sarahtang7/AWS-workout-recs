@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import '../components/recommendations/Recommendations.css';
+import { Spinner } from 'react-bootstrap';
 
 
 const pointerIcon = new L.Icon({
@@ -24,6 +26,8 @@ const Completed = () => {
     const [completed, setCompleted] = useState([]);
 
     const [workouts, setWorkouts] = useState([]);
+
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         async function fetchUserEmail() {
@@ -56,6 +60,7 @@ const Completed = () => {
                 const data = await response.json();
                 const completed = JSON.parse(data.body).doneids;
                 setCompleted(completed);
+                setLoading(false);
             }
           } catch (error) {
                 console.log(error);
@@ -129,52 +134,58 @@ const Completed = () => {
     return (
         <div>
 
-            <h1 style={{ marginBottom: "0px"}}>Completed</h1>
+            <h1 style={{ marginBottom: "0px"}}>Your Completed Workouts</h1>
 
-            <div id='workout-info' style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+            {loading ? (
+            <Spinner animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </Spinner>
+            ) : (
+                <div id='workout-info' style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
 
-                {workouts.map((workout, index) => (
-                    <div key={index} id='curr-workout' style={{ width: '32%', display: 'inline', 
-                                                            padding: '5px', margin: '5px', 
-                                                            border: '1px solid black', 
-                                                            justifyContent: 'center', cursor: 'pointer' }}
-                            onClick={() => handleWorkoutClick(workout[13])}>
-                        
-                        <div style={{ height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <b>{workout[0]}</b>
-                        </div>
-
-                        <div id='double-panel' style={{ display: 'flex' }}>
-
-                            <MapContainer center={[workout[1], workout[2]]} zoom={13} style={{ height: '230px', width: '50%', margin: '10px' }}>
-                                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                                    <Marker position={[workout[1], workout[2]]} icon={pointerIcon}></Marker>
-                            </MapContainer>
-
-                            <div style={{ margin: '10px', textAlign: 'left', fontSize: '13px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-
-                                <div>{workout[11]}, {workout[12]} intensity</div>
-
-                                <br />
-
-                                <div>every {workout[3]}</div>
-                                <div>{workout[4]}-{workout[5]}</div>
-
-                                <br />
-
-                                <div>{workout[6]}</div>
-                                <div>{workout[7]}</div>
-                                <div>{workout[8]}, {workout[9]}</div>
-                                <div>{workout[10]}</div>
-
+                    {workouts.map((workout, index) => (
+                        <div key={index} id='curr-workout' class='workout-card' style={{ width: '32%', display: 'inline', 
+                                                                padding: '5px', margin: '5px', 
+                                                                border: '1px solid black', 
+                                                                justifyContent: 'center', cursor: 'pointer' }}
+                                onClick={() => handleWorkoutClick(workout[13])}>
+                            
+                            <div style={{ height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <b>{workout[0]}</b>
                             </div>
 
-                        </div>
-                        
-                    </div>
-                ))}
+                            <div id='double-panel' style={{ display: 'flex' }}>
 
-            </div>
+                                <MapContainer center={[workout[1], workout[2]]} zoom={13} style={{ height: '230px', width: '50%', margin: '10px' }}>
+                                    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                                        <Marker position={[workout[1], workout[2]]} icon={pointerIcon}></Marker>
+                                </MapContainer>
+
+                                <div style={{ margin: '10px', textAlign: 'left', fontSize: '13px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+
+                                    <div>{workout[11]}, {workout[12]} intensity</div>
+
+                                    <br />
+
+                                    <div>every {workout[3]}</div>
+                                    <div>{workout[4]}-{workout[5]}</div>
+
+                                    <br />
+
+                                    <div>{workout[6]}</div>
+                                    <div>{workout[7]}</div>
+                                    <div>{workout[8]}, {workout[9]}</div>
+                                    <div>{workout[10]}</div>
+
+                                </div>
+
+                            </div>
+                            
+                        </div>
+                    ))}
+
+                </div>
+            )}
 
         </div>
     );

@@ -6,6 +6,7 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { Auth } from 'aws-amplify';
 import FilterBar from '../FilterBar/FilterBar';
+import { Spinner } from 'react-bootstrap';
 
 const pointerIcon = new L.Icon({
     iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
@@ -34,6 +35,8 @@ const Recommendations = () => {
         location: '',
     });
 
+    const [loading, setLoading] = useState(true);
+
 
     useEffect(() => {
         async function fetchUserEmail() {
@@ -48,6 +51,7 @@ const Recommendations = () => {
     }, []);
 
     function buildWorkout(workout) {
+
         const handleWorkoutClick = (curr_id) => {
             window.location.href = `/workout/${curr_id}`;
         }
@@ -102,6 +106,11 @@ const Recommendations = () => {
                             <div>every <b>{workout.weekDay}</b>, <b>{new Date(`1970-01-01T${workout.start_time}:00`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}-{new Date(`1970-01-01T${workout.end_time}:00`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</b></div>
                             <hr class="h-line" />
                             <div>{workout.description.split(' ').slice(0, 20).join(' ')}...</div>
+                            <br />
+
+                            {/* <span style={{padding: '5px', backgroundColor: 'rgb(255 232 235)', margin: '5px'}}>Favorited</span> 
+                            
+                            <span style={{padding: '5px', backgroundColor: '#ebffeb', margin: '5px'}}>Completed</span> */}
                         </div>
 
                         <div class="right" style={{ width: '30%', }}>
@@ -161,7 +170,8 @@ const Recommendations = () => {
             });
 
             setWorkouts(workouts);
-            //console.log(rawData);
+            setLoading(false);
+            console.log(rawData);
         };
 
         fetchData();
@@ -185,11 +195,22 @@ const Recommendations = () => {
             <div style={{ height: '630px', margin: '10px', display: 'flex' }}>
 
                 <div style={{ width: '40%', overflow: 'auto', paddingRight: '10px', marginTop: '-10px' }}>
-                    {workouts.filter(filterWorkouts).map((workout) => {
-                        return (
-                            buildWorkout(workout, setSelectedWorkout)
-                        );
-                    })}
+
+                    {loading ? (
+                    <Spinner animation="border" role="status">
+                        <h2 className="visually-hidden">
+                            Generating your recommended workouts...hang tight!
+                        </h2>
+                    </Spinner>
+                    ) : (
+                    <div>
+                        {workouts.filter(filterWorkouts).map((workout) => {
+                            return (
+                                buildWorkout(workout, setSelectedWorkout)
+                            );
+                        })}
+                    </div>
+                    )}
                 </div>
 
                 <MapContainer id="map" center={[40.7831, -73.9712]} zoom={10} style={{ height: '100%', width: '60%' }} ref={mapRef}>
